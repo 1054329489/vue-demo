@@ -5,6 +5,11 @@ import App from './App'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import router from './router'
+import Mock from './mock/index'
+import axios from 'axios'
+
+axios.defaults.baseURL = 'http://localhost:8080'
+Vue.prototype.$http = axios
 /* eslint-disable */
 import locale from 'element-ui/lib/locale/lang/en'
 
