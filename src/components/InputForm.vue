@@ -4,9 +4,9 @@
       <el-select v-model="ruleForm.cusip" placeholder="choose the cusip" value="" :clearable="true" style="width: 100%">
         <el-option
           v-for="item in cusip"
-          :key="item.cusip"
-          :label="item.cusip"
-          :value="item.cusip">
+          :key="item"
+          :label="item"
+          :value="item">
         </el-option>
       </el-select>
     </el-form-item>
@@ -81,14 +81,17 @@ export default {
   beforeCreate () {
     this.$nextTick(function () {
       let _this = this
-      this.$http.get('/allCusip').then(res => {
-        _this.cusip = res.data.posts
+      this.$http.get('/all-cusip').then(res => {
+        _this.cusip = res.data
+        console.log(res)
       })
-      this.$http.get('/allSeller').then(res => {
-        _this.seller = res.data.posts
+      this.$http.get('/all-seller').then(res => {
+        _this.seller = res.data
+        console.log(res)
       })
-      this.$http.get('/allClient').then(res => {
-        _this.client = res.data.posts
+      this.$http.get('/all-client').then(res => {
+        _this.client = res.data
+        console.log(res)
       })
     })
   },

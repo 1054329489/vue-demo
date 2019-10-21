@@ -1,6 +1,6 @@
 const Mock = require('mockjs')
 const Random = Mock.Random
-const domain = 'http://localhost:8080'
+const domain = 'http://localhost:8080/tps'
 const code = 200
 
 const postData = req => {

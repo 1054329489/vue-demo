@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/views/hello/Hello'
 import Login from '@/views/login/Login'
 import InputForm from '@/components/InputForm'
+import Trader from '@/views/trader/Trader'
 
 Vue.use(Router)
 
@@ -27,6 +28,11 @@ export default new Router({
       path: '/inputForm',
       name: 'InputForm',
       component: InputForm
+    },
+    {
+      path: '/trader',
+      name: 'Trader',
+      component: Trader
     }
   ]
 })
