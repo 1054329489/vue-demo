@@ -1,14 +1,5 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png" alt="no-image">
-    <div>
-      <router-view></router-view>
-      <!--    <div>-->
-      <!--      <router-link to="/HelloWorld">HelloWorld</router-link>-->
-      <!--      <router-link to="/NavMenu">NavMenu</router-link>-->
-      <!--    </div>-->
-    </div>
-  </div>
+  <router-view/>
 </template>
 
 <script>
@@ -17,7 +8,6 @@ export default {
   components: {
   }
 }
-
 </script>
 
 <style>
