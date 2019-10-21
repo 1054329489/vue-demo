@@ -5,10 +5,11 @@ import App from './App'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import router from './router'
+/* eslint-disable */
+import locale from 'element-ui/lib/locale/lang/en'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
-/* eslint-disable*/
 new Vue({
   el: '#app',
   router,

@@ -1,18 +1,20 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png" alt="no-image">
-    <el-aside width="200px">
-      <navmenu></navmenu>
-    </el-aside>
+    <div>
+      <router-view></router-view>
+      <!--    <div>-->
+      <!--      <router-link to="/HelloWorld">HelloWorld</router-link>-->
+      <!--      <router-link to="/NavMenu">NavMenu</router-link>-->
+      <!--    </div>-->
+    </div>
   </div>
 </template>
 
 <script>
-import NavMenu from '@/components/NavMenu'
 export default {
   name: 'App',
   components: {
-    'navmenu': NavMenu
   }
 }
 
