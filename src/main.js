@@ -13,6 +13,9 @@ Vue.prototype.$http = axios
 /* eslint-disable */
 import locale from 'element-ui/lib/locale/lang/en'
 
+
+
+
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 new Vue({
