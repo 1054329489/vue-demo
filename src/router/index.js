@@ -41,9 +41,8 @@ router.beforeEach((to, from, next) => {
   if (to.path === '/login') {
     next()
   } else {
-    let token = localStorage.getItem('Authorization')
-    console.log('11' + token)
-
+    let token = localStorage.getItem('token')
+    console.log(token)
     if (token === null || token === '') {
       next('/login')
     } else {

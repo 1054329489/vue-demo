@@ -33,27 +33,38 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['changeLogin']),
+    ...mapMutations(['setToken']),
     login () {
       let _this = this
       if (this.loginForm.tId === 0 || this.loginForm.tPwd === '') {
         alert('Input cannot be empty')
       } else {
         console.log(_this.loginForm)
-        this.$ajax({
-          method: 'post',
-          url: '/tps/trader-login',
-          data: _this.loginForm
-        }).then(res => {
+        this.$axios.post(`/tps/trader-login`, _this.loginForm).then(res => {
+          let token = res.data.body.token
           console.log(res.data)
-          _this.userToken = 'Bearer ' + res.data.data.body.token
-          // save token into the vuex
-          _this.changeLogin({ Authorization: _this.userToken })
-          _this.$router.push('/trader')
-          alert('Log In Successfully')
-        }).catch(error => {
-          alert('Log in failed, please check the id and password')
-          console.log(error)
+          if (token !== null) {
+            _this.$message.success('Log In Successfully')
+            _this.token = token
+            _this.setToken({token: _this.token})
+            // _this.$router.push({path: '/trader'})
+
+            let storage = window.localStorage
+            alert(storage.getItem('token'))
+
+            if (this.$store.state.token) {
+              this.$router.push('/trader')
+              console.log(this.$store.state.token.token)
+            } else {
+              this.$router.replace('/login')
+            }
+          } else {
+            let mes = res.data.message
+            _this.$message.error(mes)
+          }
+        }).catch(function (err) {
+          console.log(err)
+          _this.$message.error('Error！！')
         })
       }
     }

@@ -7,11 +7,14 @@ import 'element-ui/lib/theme-chalk/index.css'
 import router from './router'
 // import Mock from './mock/index'
 import axios from 'axios'
+import store from './store/index'
 
 axios.defaults.baseURL = 'http://localhost:8080/tps'
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+axios.defaults.headers.post['Content-Type'] = 'application/json'
 Vue.prototype.$http = axios
 Vue.prototype.$ajax = axios
+Vue.prototype.$axios = axios
+
 /* eslint-disable */
 import locale from 'element-ui/lib/locale/lang/en'
 
@@ -23,6 +26,42 @@ Vue.use(ElementUI)
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
+
+// Add a request interceptor
+axios.interceptors.request.use(config => {
+//if token exist, add
+  if(store.state.token){
+    config.headers.common['Authorization']=store.state.token.token
+  }
+
+  return config;
+}, error => {
+// if error
+  return Promise.reject(error);
+});
+
+// http response interceptors
+axios.interceptors.response.use(
+  response => {
+
+    return response;
+  },
+  error => {
+
+    if (error.response) {
+      switch (error.response.status) {
+        case 401:
+          this.$store.commit('del_token');
+          router.replace({
+            path: '/login',
+            query: {redirect: router.currentRoute.fullPath}//登录成功后跳入浏览的当前页面
+          })
+      }
+    }
+    return Promise.reject(error.response.data)
+  });
+
