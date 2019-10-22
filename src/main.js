@@ -35,7 +35,7 @@ new Vue({
 axios.interceptors.request.use(config => {
 //if token exist, add
   if(store.state.token){
-    config.headers.common['Authorization']=store.state.token.token
+    config.headers.common['token']=store.state.token.token
   }
 
   return config;
@@ -58,7 +58,7 @@ axios.interceptors.response.use(
           this.$store.commit('del_token');
           router.replace({
             path: '/login',
-            query: {redirect: router.currentRoute.fullPath}//登录成功后跳入浏览的当前页面
+            query: {redirect: router.currentRoute.fullPath}
           })
       }
     }

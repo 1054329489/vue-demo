@@ -6,10 +6,10 @@ const store = new Vuex.Store({
   state: {
     token: localStorage.getItem('token') ? localStorage.getItem('token') : ''
   },
-  mutotions: {
+  mutations: {
     setToken (state, token) {
       state.token = token
-      localStorage.setItem('token', token.token)
+      localStorage.setItem('token', token)
     },
     delToken (state) {
       state.token = ''

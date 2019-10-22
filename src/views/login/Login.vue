@@ -13,6 +13,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" class="login-btn" icon="el-icon-check" @click="login"  />
+
           <!-- :loading="submitLoad" -->
         </el-form-item>
       </el-form>
@@ -39,18 +40,17 @@ export default {
       if (this.loginForm.tId === 0 || this.loginForm.tPwd === '') {
         alert('Input cannot be empty')
       } else {
-        console.log(_this.loginForm)
-        this.$axios.post(`/tps/trader-login`, _this.loginForm).then(res => {
-          let token = res.data.body.token
-          console.log(res.data)
-          if (token !== null) {
+        console.log(JSON.stringify(_this.loginForm))
+        this.$axios.post(`/trader-login`, JSON.stringify(_this.loginForm)).then(res => {
+          let token = res.data.token
+          // console.log(token)
+          // console.log(res.data.message)
+          if (token !== undefined) {
             _this.$message.success('Log In Successfully')
-            _this.token = token
-            _this.setToken({token: _this.token})
-            // _this.$router.push({path: '/trader'})
+            _this.setToken({token: token})
 
-            let storage = window.localStorage
-            alert(storage.getItem('token'))
+            // let storage = window.localStorage
+            // alert(storage.getItem('token'))
 
             if (this.$store.state.token) {
               this.$router.push('/trader')
@@ -67,6 +67,11 @@ export default {
           _this.$message.error('Error！！')
         })
       }
+    },
+    test(){
+      this.$http.get(`/all-client`).then(res => {
+        console.log(res)
+      })
     }
   }
 }
