@@ -6,11 +6,11 @@
       </div>
       <el-form class="login-form" size="medium" ref="form">
         <el-form-item prop="username">
-          <el-input placeholder="请输入账户名：" autofocus=""  v-model="loginForm.username" />
+          <el-input placeholder="请输入账户名：" autofocus=""  v-model.number="loginForm.tId" />
           <!--  -->
         </el-form-item>
         <el-form-item prop="password">
-          <el-input type="password" placeholder="请输入账户密码：" v-model="loginForm.password" />
+          <el-input type="password" placeholder="请输入账户密码：" v-model="loginForm.tPwd" />
           <!--   -->
         </el-form-item>
         <el-form-item>
@@ -24,25 +24,24 @@
 
 <script>
 import { mapMutations } from 'vuex'
-// import asios from 'asios';
 
 export default {
   data () {
     return {
       loginForm: {
-        username: '',
-        password: ''
+        tId: '',
+        tPwd: ''
       }
     }
   },
-
   methods: {
     ...mapMutations(['changeLogin']),
     login () {
       let _this = this
-      if (this.loginForm.username === '' || this.loginForm.password === '') {
+      if (this.loginForm.tId === 0 || this.loginForm.tPwd === '') {
         alert('账号或密码不能为空')
       } else {
+        console.log(_this.loginForm)
         this.$ajax({
           method: 'post',
           url: '/tps/trader-login',
