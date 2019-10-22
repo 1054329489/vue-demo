@@ -32,10 +32,10 @@
       </el-select>
     </el-form-item>
     <el-form-item label="Price" prop="price">
-      <el-input v-model.number="ruleForm.price"></el-input>
+      <el-input v-model.number="ruleForm.price" placeholder="please input the price"></el-input>
     </el-form-item>
     <el-form-item label="Notional Amount" prop="notionalAmount">
-      <el-input v-model.number="ruleForm.notionalAmount"></el-input>
+      <el-input v-model.number="ruleForm.notionalAmount" placeholder="please input the amount"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submitForm('ruleForm')">submit</el-button>
