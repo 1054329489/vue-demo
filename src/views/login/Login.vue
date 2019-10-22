@@ -45,14 +45,14 @@ export default {
       } else {
         this.$ajax({
           method: 'post',
-          url: '/user/login',
+          url: '/tps/trader-login',
           data: _this.loginForm
         }).then(res => {
           console.log(res.data)
           _this.userToken = 'Bearer ' + res.data.data.body.token
           // 将用户token保存到vuex中
           _this.changeLogin({ Authorization: _this.userToken })
-          _this.$router.push('/home')
+          _this.$router.push('/trader')
           alert('登陆成功')
         }).catch(error => {
           alert('账号或密码错误')
