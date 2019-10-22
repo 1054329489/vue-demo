@@ -10,8 +10,8 @@
         </el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="Seller" prop="seller">
-      <el-select v-model="ruleForm.seller" placeholder="choose your name" value="" :clearable="true" style="width: 100%">
+    <el-form-item label="Seller" prop="sId">
+      <el-select v-model="ruleForm.sId" placeholder="choose your name" value="" :clearable="true" style="width: 100%">
         <el-option
           v-for="item in seller"
           :key="item.sId"
@@ -20,8 +20,8 @@
         </el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="Client" prop="client">
-      <el-select v-model="ruleForm.client" placeholder="choose your client name" value="" :clearable="true"
+    <el-form-item label="Client" prop="cId">
+      <el-select v-model="ruleForm.cId" placeholder="choose your client name" value="" :clearable="true"
                  style="width: 100%">
         <el-option
           v-for="item in client"
@@ -34,8 +34,8 @@
     <el-form-item label="Price" prop="price">
       <el-input v-model.number="ruleForm.price"></el-input>
     </el-form-item>
-    <el-form-item label="Notional Amount" prop="amount">
-      <el-input v-model.number="ruleForm.amount"></el-input>
+    <el-form-item label="Notional Amount" prop="notionalAmount">
+      <el-input v-model.number="ruleForm.notionalAmount"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submitForm('ruleForm')">submit</el-button>
@@ -52,22 +52,26 @@ export default {
       client: [],
       ruleForm: {
         cusip: '',
-        seller: '',
-        client: '',
+        sId: '',
+        cId: '',
         price: '',
-        amount: ''
+        notionalAmount: '',
+        status: 'REQUESTED',
+        interVNum: 1,
+        interId: 'SW1',
+        txn_id: 11111
       },
       rules: {
         cusip: [
           {required: true, message: 'please choose a product', trigger: 'change'}
         ],
-        seller: [
+        sId: [
           {type: 'date', required: true, message: 'please choose your name', trigger: 'change'}
         ],
-        client: [
+        cId: [
           {type: 'date', required: true, message: 'please choose a client', trigger: 'change'}
         ],
-        amount: [
+        notionalAmount: [
           {required: true, message: 'please input the notional amount', trigger: 'blur'},
           {type: 'number', message: 'not a number', trigger: 'blur'}
         ],
@@ -83,15 +87,15 @@ export default {
       let _this = this
       this.$http.get('/all-cusip').then(res => {
         _this.cusip = res.data
-        console.log(res)
+        // console.log(res)
       })
       this.$http.get('/all-seller').then(res => {
         _this.seller = res.data
-        console.log(res)
+        // console.log(res)
       })
       this.$http.get('/all-client').then(res => {
         _this.client = res.data
-        console.log(res)
+        // console.log(res)
       })
     })
   },
@@ -100,7 +104,10 @@ export default {
       let _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log(_this.ruleForm)
+          // console.log(JSON.stringify(_this.ruleForm))
+          _this.$http.post('/sales-leg', JSON.stringify(_this.ruleForm)).then(res => {
+            console.log(res)
+          })
           alert('submit!')
         } else {
           console.log('error submit!!')

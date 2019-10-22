@@ -9,6 +9,7 @@ import router from './router'
 import axios from 'axios'
 
 axios.defaults.baseURL = 'http://localhost:8080/tps'
+axios.defaults.headers.post['Content-Type'] = 'application/json';
 Vue.prototype.$http = axios
 /* eslint-disable */
 import locale from 'element-ui/lib/locale/lang/en'
