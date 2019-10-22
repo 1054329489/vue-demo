@@ -10,6 +10,7 @@ import axios from 'axios'
 
 axios.defaults.baseURL = 'http://localhost:8080/tps'
 Vue.prototype.$http = axios
+Vue.prototype.$ajax = axios
 /* eslint-disable */
 import locale from 'element-ui/lib/locale/lang/en'
 
