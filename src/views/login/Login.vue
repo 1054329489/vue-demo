@@ -6,12 +6,10 @@
       </div>
       <el-form class="login-form" size="medium" ref="form">
         <el-form-item prop="username">
-          <el-input placeholder="请输入账户名：" autofocus=""  v-model.number="loginForm.tId" />
-          <!--  -->
+          <el-input placeholder="please enter the trader id：" autofocus=""  v-model.number="loginForm.tId" />
         </el-form-item>
         <el-form-item prop="password">
-          <el-input type="password" placeholder="请输入账户密码：" v-model="loginForm.tPwd" />
-          <!--   -->
+          <el-input type="password" placeholder="please enter the password：" v-model="loginForm.tPwd" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" class="login-btn" icon="el-icon-check" @click="login"  />
@@ -39,7 +37,7 @@ export default {
     login () {
       let _this = this
       if (this.loginForm.tId === 0 || this.loginForm.tPwd === '') {
-        alert('账号或密码不能为空')
+        alert('Input cannot be empty')
       } else {
         console.log(_this.loginForm)
         this.$ajax({
@@ -49,11 +47,12 @@ export default {
         }).then(res => {
           console.log(res.data)
           _this.userToken = 'Bearer ' + res.data.data.body.token
+          // save token into the vuex
           _this.changeLogin({ Authorization: _this.userToken })
           _this.$router.push('/trader')
-          alert('登陆成功')
+          alert('Log In Successfully')
         }).catch(error => {
-          alert('账号或密码错误')
+          alert('Log in failed, please check the id and password')
           console.log(error)
         })
       }
