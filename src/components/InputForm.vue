@@ -111,8 +111,8 @@
             // console.log(JSON.stringify(_this.ruleForm))
             _this.$http.post('/sales-leg', _this.ruleForm).then(res => {
               console.log(res)
+              alert('submit success!')
             })
-            alert('submit!')
           } else {
             console.log('error submit!!')
             return false

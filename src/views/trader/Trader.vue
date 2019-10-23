@@ -261,20 +261,13 @@
         this.$http.get('/trader-leg').then(res => {
           _this.allTraderLeg = res.data
           console.log(_this.allTraderLeg)
-          _this.allTraderLeg.map(function (obj, index, input) {
-            if (index === 0) {
-            } else if (index === input.length - 1) {
+          _this.$http.get('/newest-trader-leg').then(res => {
+            _this.traderLeg = []
+            res.data.map(function (obj) {
               if (obj.status === 'PENDING') {
                 _this.traderLeg.push(obj)
               }
-            } else {
-              if (obj.txnId !== input[index + 1].txnId) {
-                if (obj.status === 'PENDING') {
-                  _this.traderLeg.push(obj)
-                }
-              }
-            }
-            return obj
+            })
           })
         })
       })
@@ -287,6 +280,7 @@
         _this.$http.get('/newest-sales-leg').then(res => {
           //user clicked one traderLeg row
           //then click another, we need clear the salesLeg array
+          // console.log(res.data + "!!!!!!!!!!!!!!!!")
           _this.salesLeg = []
           res.data.map(function (obj) {
             if (obj.status === 'PENDING') {
@@ -307,10 +301,11 @@
         let _this = this
         _this.chosenSalesLeg = rowData
         let param = '/force-match?traderLegTxnId=' + _this.chosenTraderLeg.txnId + '&salesLegTxnId=' + _this.chosenSalesLeg.txnId
-        _this.$http.post(param).then(res => {
+        _this.$http.get(param).then(res => {
           console.log(param)
+          alert('force match success!')
         })
-        alert(_this.chosenSalesLeg.txnId + '  ' + _this.chosenTraderLeg.txnId)
+
         _this.dialogVisible = false
       },
       addNew () {
@@ -320,12 +315,24 @@
         let _this = this
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            // console.log(JSON.stringify(_this.ruleForm))
+            console.log(JSON.stringify(_this.ruleForm))
             _this.$http.post('/trader-leg', _this.ruleForm).then(res => {
               _this.addDialogVisible = false
               console.log(res)
+              alert('submit success!')
+              this.$http.get('/trader-leg').then(res => {
+                _this.allTraderLeg = res.data
+                _this.$http.get('/newest-trader-leg').then(res => {
+                  _this.traderLeg = []
+                  res.data.map(function (obj) {
+                    if (obj.status === 'PENDING') {
+                      _this.traderLeg.push(obj)
+                    }
+                  })
+                })
+              })
             })
-            alert('submit!')
+
           } else {
             console.log('error submit!!')
             return false
