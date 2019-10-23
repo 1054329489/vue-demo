@@ -9,7 +9,7 @@ const store = new Vuex.Store({
   mutations: {
     setToken (state, token) {
       state.token = token
-      localStorage.setItem('token', token)
+      localStorage.setItem('token', token.token)
     },
     delToken (state) {
       state.token = ''

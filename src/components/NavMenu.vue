@@ -15,7 +15,7 @@
             <el-menu-item-group title="Leg Detail">
 <!--              change into matched and pending-->
               <el-menu-item index="/matchedLeg" @click="goTo('/matchedLeg')">Matched Lag</el-menu-item>
-              <el-menu-item index="/trader"  @click="goTo('/trader')">Pending Leg</el-menu-item>
+              <el-menu-item index="/pendingLeg"  @click="goTo('/pendingLeg')">Pending Leg</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>
@@ -24,6 +24,9 @@
         <div class="mainHeader" >
           <!--nav collapse control-->
           <span><i class="el-icon-s-fold" @click="handleFold()"></i></span>
+          <div class="citiLogo">
+            <img src="../../src/assets/citi-logo.png" width="50" >
+          </div>
           <div class="userCenter">
             <el-dropdown trigger="click">
               <span class="username">Hello, Trader &nbsp;&nbsp;&nbsp;</span>
@@ -57,7 +60,7 @@
       return {
         isCollapse: false,
         collapseStatus: false,
-        avaUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
+        avaUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
       }
     },
     methods: {
@@ -90,8 +93,6 @@
   .containerWrapper{
     display: flex;
     flex-direction: row;
-
-
   }
   .sidebarWrapper{
     min-height: 100vh;
@@ -126,6 +127,9 @@
   }
   .userCenter .username{
     margin-right: 15px;
+  }
+  .citiLogo{
+    position: center;
   }
 </style>
 

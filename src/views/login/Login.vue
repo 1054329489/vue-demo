@@ -15,7 +15,7 @@
           <el-input type="password" placeholder="please enter the password" v-model="loginForm.tPwd" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="login-btn" icon="el-icon-check" @click="login"  />
+          <el-button type="primary" class="login-btn" icon="el-icon-check" @click="login"/>
 
           <!-- :loading="submitLoad" -->
         </el-form-item>
@@ -46,18 +46,17 @@ export default {
         console.log(JSON.stringify(_this.loginForm))
         this.$axios.post(`/trader-login`, JSON.stringify(_this.loginForm)).then(res => {
           let token = res.data.token
-          // console.log(token)
-          // console.log(res.data.message)
+          console.log("3"+token)
           if (token !== undefined) {
             _this.$message.success('Log In Successfully')
             _this.setToken({token: token})
 
-            // let storage = window.localStorage
-            // alert(storage.getItem('token'))
+            let storage = window.localStorage
+            alert(storage.getItem('token'))
 
             if (this.$store.state.token) {
-              this.$router.push('/trader')
-              console.log(this.$store.state.token.token)
+              this.$router.push('/matchedLeg')
+              // console.log(this.$store.state.token.token)
             } else {
               this.$router.replace('/login')
             }
@@ -70,11 +69,6 @@ export default {
           _this.$message.error('Error！！')
         })
       }
-    },
-    test(){
-      this.$http.get(`/all-client`).then(res => {
-        console.log(res)
-      })
     }
   }
 }

@@ -1,51 +1,64 @@
 <template>
-  <div >
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="auto" class="demo-ruleForm"
-             style="width: 50%; margin:0 auto;">
-      <el-form-item label="Cusip" prop="cusip">
-        <el-select v-model="ruleForm.cusip" placeholder="choose the cusip" value="" :clearable="true"
-                   style="width: 100%">
-          <el-option
-            v-for="item in cusip"
-            :key="item"
-            :label="item"
-            :value="item">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="Seller" prop="sId">
-        <el-select v-model="ruleForm.sId" placeholder="choose your name" value="" :clearable="true" style="width: 100%">
-          <el-option
-            v-for="item in seller"
-            :key="item.sId"
-            :label="item.sName"
-            :value="item.sId">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="Client" prop="cId">
-        <el-select v-model="ruleForm.cId" placeholder="choose your client name" value="" :clearable="true"
-                   style="width: 100%">
-          <el-option
-            v-for="item in client"
-            :key="item.cId"
-            :label="item.cName"
-            :value="item.cId">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="Price" prop="price">
-        <el-input v-model.number="ruleForm.price" placeholder="please input the price"></el-input>
-      </el-form-item>
-      <el-form-item label="Notional Amount" prop="notionalAmount">
-        <el-input v-model.number="ruleForm.notionalAmount" placeholder="please input the amount"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')">submit</el-button>
-        <el-button @click="resetForm('ruleForm')">reset</el-button>
-      </el-form-item>
-    </el-form>
-  </div>
+  <div class="container">
+    <div class="contentWrapper" style="background-color: #EFF2F7" >
+      <div class="mainHeader" >
+         <div class="citiLogo">
+          <img src="../../src/assets/citi-logo.png" width="50" >
+        </div>
+        <div class="userCenter">
+          <span class="username">Hello, Sales &nbsp;&nbsp;&nbsp;</span>
+          <el-avatar :size="40" :src="avaUrl"></el-avatar>
+        </div>
+      </div>
+    </div>
+    <div class="formWrapper">
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="auto" class="demo-ruleForm"
+               style="width: 50%; margin:0 auto;">
+        <el-form-item label="Cusip" prop="cusip">
+          <el-select v-model="ruleForm.cusip" placeholder="choose the cusip" value="" :clearable="true"
+                     style="width: 100%">
+            <el-option
+              v-for="item in cusip"
+              :key="item"
+              :label="item"
+              :value="item">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="Seller" prop="sId">
+          <el-select v-model="ruleForm.sId" placeholder="choose your name" value="" :clearable="true" style="width: 100%">
+            <el-option
+              v-for="item in seller"
+              :key="item.sId"
+              :label="item.sName"
+              :value="item.sId">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="Client" prop="cId">
+          <el-select v-model="ruleForm.cId" placeholder="choose your client name" value="" :clearable="true"
+                     style="width: 100%">
+            <el-option
+              v-for="item in client"
+              :key="item.cId"
+              :label="item.cName"
+              :value="item.cId">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="Price" prop="price">
+          <el-input v-model.number="ruleForm.price" placeholder="please input the price"></el-input>
+        </el-form-item>
+        <el-form-item label="Notional Amount" prop="notionalAmount">
+          <el-input v-model.number="ruleForm.notionalAmount" placeholder="please input the amount"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm('ruleForm')">submit</el-button>
+          <el-button @click="resetForm('ruleForm')">reset</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+    </div>
 </template>
 <script>
   export default {
@@ -54,6 +67,7 @@
         cusip: [],
         seller: [],
         client: [],
+        avaUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
         ruleForm: {
           cusip: '',
           sId: '',
@@ -63,7 +77,7 @@
           status: 'REQUESTED',
           interVNum: 1,
           interId: 'SW1',
-          txn_id: 11111
+          txn_id: 11111,
         },
         rules: {
           cusip: [
@@ -126,14 +140,33 @@
   }
 </script>
 <style>
-  .container {
-    min-height: 100vh;
-    align-items: center;
-    background-image: url(../views/login/images/login_body.jpg);
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+  . container{
     display: flex;
-    justify-content: center;
-
   }
+  .contentWrapper{
+    flex: 1;
+  }
+
+  .mainHeader{
+    height: 56px;
+    padding: 0 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .userCenter{
+    display: flex;
+    align-items: center;
+  }
+  .userCenter .username{
+    margin-right: 15px;
+  }
+  .citiLogo{
+    position: center;
+  }
+  .formWrapper{
+    margin-top: 50px;
+  }
+
 </style>
