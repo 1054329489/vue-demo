@@ -4,6 +4,8 @@ import HelloWorld from '@/views/hello/Hello'
 import Login from '@/views/login/Login'
 import InputForm from '@/components/InputForm'
 import Trader from '@/views/trader/Trader'
+import Nav from '@/components/NavMenu'
+import NavMenu from "../components/NavMenu";
 
 Vue.use(Router)
 
@@ -17,7 +19,20 @@ const router = new Router({
     },
     {
       path: '/',
-      redirect: '/login'
+      name: 'NavMenu',
+      component: NavMenu,
+      children: [
+        {
+          path: '/inputForm',
+          name: 'InputForm',
+          component: InputForm
+        },
+        {
+          path: '/trader',
+          name: 'Trader',
+          component: Trader
+        }
+      ]
     },
     {
       path: '/login',
@@ -37,18 +52,18 @@ const router = new Router({
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.path === '/login') {
-    next()
-  } else {
-    let token = localStorage.getItem('token')
-    console.log(token)
-    if (token === null || token === '') {
-      next('/login')
-    } else {
-      next()
-    }
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   if (to.path === '/login') {
+//     next()
+//   } else {
+//     let token = localStorage.getItem('token')
+//     console.log(token)
+//     if (token === null || token === '') {
+//       next('/login')
+//     } else {
+//       next()
+//     }
+//   }
+// })
 
 export default router
