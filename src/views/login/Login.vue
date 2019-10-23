@@ -6,10 +6,10 @@
       </div>
       <el-form class="login-form" size="medium" ref="form">
         <el-form-item prop="username">
-          <el-input placeholder="please enter the trader id：" autofocus=""  v-model.number="loginForm.tId" />
+          <el-input placeholder="please enter the trader id" autofocus=""  v-model.number="loginForm.tId" />
         </el-form-item>
         <el-form-item prop="password">
-          <el-input type="password" placeholder="please enter the password：" v-model="loginForm.tPwd" />
+          <el-input type="password" placeholder="please enter the password" v-model="loginForm.tPwd" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" class="login-btn" icon="el-icon-check" @click="login"  />

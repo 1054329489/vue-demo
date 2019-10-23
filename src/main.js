@@ -55,7 +55,7 @@ axios.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          this.$store.commit('del_token');
+          this.$store.commit('delToken');
           router.replace({
             path: '/login',
             query: {redirect: router.currentRoute.fullPath}

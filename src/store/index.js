@@ -13,6 +13,7 @@ const store = new Vuex.Store({
     },
     delToken (state) {
       state.token = ''
+      console.log(1)
       localStorage.removeItem('token')
     }
   }
