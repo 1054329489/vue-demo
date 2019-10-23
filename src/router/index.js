@@ -4,6 +4,7 @@ import HelloWorld from '@/views/hello/Hello'
 import Login from '@/views/login/Login'
 import InputForm from '@/components/InputForm'
 import Trader from '@/views/trader/Trader'
+import MatchedLeg from '@/views/trader/MatchedLeg'
 import Nav from '@/components/NavMenu'
 import NavMenu from "../components/NavMenu";
 
@@ -23,14 +24,14 @@ const router = new Router({
       component: NavMenu,
       children: [
         {
-          path: '/inputForm',
-          name: 'InputForm',
-          component: InputForm
-        },
-        {
           path: '/trader',
           name: 'Trader',
           component: Trader
+        },
+        {
+          path: '/matchedLeg',
+          name: 'matchedLeg',
+          component: MatchedLeg
         }
       ]
     },

@@ -14,7 +14,7 @@
             </template>
             <el-menu-item-group title="Leg Detail">
 <!--              change into matched and pending-->
-              <el-menu-item index="/inputForm" @click="goTo('/inputForm')">Matched Lag</el-menu-item>
+              <el-menu-item index="/matchedLeg" @click="goTo('/matchedLeg')">Matched Lag</el-menu-item>
               <el-menu-item index="/trader"  @click="goTo('/trader')">Pending Leg</el-menu-item>
             </el-menu-item-group>
           </el-submenu>

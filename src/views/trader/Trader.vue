@@ -3,7 +3,7 @@
     <el-card>
       <el-button
         size="medium"
-        @click="addNew()">add
+        @click="addNew()">Add New Leg
       </el-button>
     </el-card>
     <el-table
@@ -11,14 +11,19 @@
       style="width: 100%"
       border stripe>
       <el-table-column
+        prop="txnId"
+        label="TXN ID"
+      >
+      </el-table-column>
+      <el-table-column
         prop="interVNum"
         label="version"
-        width="180">
+      >
       </el-table-column>
       <el-table-column
         prop="sId"
         label="sellerId"
-        width="180">
+      >
       </el-table-column>
       <el-table-column
         prop="cusip"
@@ -37,7 +42,7 @@
         label="status">
       </el-table-column>
       <el-table-column
-        label="option">
+        label="option" width="180">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -113,6 +118,10 @@
         border
         stripe
       >
+        <el-table-column
+          prop="txnId"
+          label="TXN ID"
+        ></el-table-column>
         <el-table-column
           prop="interVNum"
           label="version"
@@ -302,8 +311,20 @@
         _this.chosenSalesLeg = rowData
         let param = '/force-match?traderLegTxnId=' + _this.chosenTraderLeg.txnId + '&salesLegTxnId=' + _this.chosenSalesLeg.txnId
         _this.$http.get(param).then(res => {
-          console.log(param)
-          alert('force match success!')
+          if (res.data === false) {
+            alert('failed!')
+          } else {
+            alert('force match success!')
+            _this.matchDialogVisible=false
+            _this.$http.get('/newest-trader-leg').then(res => {
+              _this.traderLeg = []
+              res.data.map(function (obj) {
+                if (obj.status === 'PENDING') {
+                  _this.traderLeg.push(obj)
+                }
+              })
+            })
+          }
         })
 
         _this.dialogVisible = false
