@@ -7,19 +7,28 @@
       <div class="head-text align_center">
         <p>SIMPLE TPS</p>
       </div>
-      <el-form class="login-form" size="medium" ref="form">
-        <el-form-item prop="username">
-          <el-input placeholder="please enter the trader id" autofocus=""  v-model.number="loginForm.tId" />
-        </el-form-item>
-        <el-form-item prop="password">
-          <el-input type="password" placeholder="please enter the password" v-model="loginForm.tPwd" />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" class="login-btn" icon="el-icon-check" @click="login"/>
+      <el-tabs type="border-card">
+        <el-tab-pane label="Trader Entry">
+          <el-form class="login-form" size="medium" ref="form">
+            <el-form-item prop="username">
+              <el-input placeholder="please enter the trader id" autofocus=""  v-model.number="loginForm.tId" />
+            </el-form-item>
+            <el-form-item prop="password">
+              <el-input type="password" placeholder="please enter the password" v-model="loginForm.tPwd" />
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" class="login-btn" icon="el-icon-check" @click="login"/>
 
-          <!-- :loading="submitLoad" -->
-        </el-form-item>
-      </el-form>
+              <!-- :loading="submitLoad" -->
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+        <el-tab-pane label="Sales Entry">
+          <el-button type="primary" class="login-btn" @click="goTo('/sales')">Log In</el-button>
+        </el-tab-pane>
+
+      </el-tabs>
+
     </div>
   </div>
 </template>
@@ -69,7 +78,10 @@ export default {
           _this.$message.error('Error！！')
         })
       }
-    }
+    },
+    goTo (path) {
+      this.$router.replace(path)
+    },
   }
 }
 </script>

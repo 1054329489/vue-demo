@@ -6,8 +6,18 @@
           <img src="../../src/assets/citi-logo.png" width="50" >
         </div>
         <div class="userCenter">
-          <span class="username">Hello, Sales &nbsp;&nbsp;&nbsp;</span>
-          <el-avatar :size="40" :src="avaUrl"></el-avatar>
+          <el-dropdown trigger="click">
+            <el-link class="username" :underline="false" >
+              <span >Hello, Sales &nbsp;&nbsp;&nbsp;</span>
+
+            </el-link>
+            <el-avatar :size="40" :src="avaUrl"></el-avatar>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item @click.native="logout()">
+                LOG OUT
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
         </div>
       </div>
     </div>
@@ -135,7 +145,14 @@
       },
       resetForm (formName) {
         this.$refs[formName].resetFields()
+      },
+      logout(){
+        this.$router.replace({
+          path: '/login',
+          query: {redirect: this.$router.currentRoute.fullPath}
+        })
       }
+
     }
   }
 </script>
@@ -161,6 +178,8 @@
   }
   .userCenter .username{
     margin-right: 15px;
+    bottom: 10px;
+    position:relative;
   }
   .citiLogo{
     position: center;

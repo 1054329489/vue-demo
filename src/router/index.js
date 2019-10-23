@@ -52,19 +52,19 @@ const router = new Router({
   ]
 })
 
-// router.beforeEach((to, from, next) => {
-//   if(to.path==='/sales'){
-//     next()
-//   }else if (to.path === '/login') {
-//     next()
-//   } else {
-//     let token = localStorage.getItem('token')
-//     if (token === null || token === ''|| token === undefined) {
-//       next('/login')
-//     } else {
-//       next()
-//     }
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  if(to.path==='/sales'){
+    next()
+  }else if (to.path === '/login') {
+    next()
+  } else {
+    let token = localStorage.getItem('token')
+    if (token === null || token === ''|| token === undefined) {
+      next('/login')
+    } else {
+      next()
+    }
+  }
+})
 
 export default router

@@ -29,8 +29,9 @@
           </div>
           <div class="userCenter">
             <el-dropdown trigger="click">
-              <span class="username">Hello, Trader &nbsp;&nbsp;&nbsp;</span>
+
               <el-link :underline="false" >
+                <span class="username">Hello, Trader &nbsp;&nbsp;&nbsp;</span>
                 <el-avatar :size="40" :src="avaUrl"></el-avatar>
               </el-link>
               <el-dropdown-menu slot="dropdown">
@@ -127,6 +128,9 @@
   }
   .userCenter .username{
     margin-right: 15px;
+    bottom: 10px;
+    position:relative;
+
   }
   .citiLogo{
     position: center;
