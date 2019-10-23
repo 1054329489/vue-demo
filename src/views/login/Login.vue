@@ -1,6 +1,9 @@
 <template>
   <div class="page-module login-container">
     <div class="login-panel" @keyup.enter="onSubmit">
+      <div style="text-align: center">
+        <img src="../../../src/assets/tps-logo.png" width="101" height="127">
+      </div>
       <div class="head-text align_center">
         <p>SIMPLE TPS</p>
       </div>
@@ -81,7 +84,7 @@ export default {
   .login-container {
     min-height: 100vh;
     align-items: center;
-    background-image: url(./images/login_body.jpg);
+    background-color: rgb(50,64,87);
     background-repeat: no-repeat;
     background-size: 100% 100%;
     display:flex;
@@ -94,7 +97,7 @@ export default {
     border-radius: 3px;
     margin:0 auto;
     text-align:center;
-    background-color:rgba(255, 255, 255, 0.781);
+    background-color:rgba(255, 255, 255, 1);
   }
   .head-text {
     margin-bottom: 25px;

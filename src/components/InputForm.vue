@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div >
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="auto" class="demo-ruleForm"
              style="width: 50%; margin:0 auto;">
       <el-form-item label="Cusip" prop="cusip">

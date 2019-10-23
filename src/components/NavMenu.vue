@@ -2,7 +2,7 @@
   <div>
     <div class="containerWrapper">
       <div class="sidebarWrapper">
-        <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="collapseStatus">
+        <el-menu default-active="1-4-1"  background-color="#324057" text-color="#FFFFFF" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="collapseStatus">
           <el-menu-item index="0">
             <i class="el-icon-menu"></i>
             <span slot="title">Trader WorkStation</span>
@@ -20,14 +20,16 @@
           </el-submenu>
         </el-menu>
       </div>
-      <div class="contentWrapper">
-        <div class="mainHeader">
+      <div class="contentWrapper" style="background-color: #EFF2F7" >
+        <div class="mainHeader" >
           <!--nav collapse control-->
           <span><i class="el-icon-s-fold" @click="handleFold()"></i></span>
           <div class="userCenter">
-            <el-dropdown trigger="hover">
-              <el-link :underline="false" class="username">Hello, Trader</el-link>
-              <el-avatar :size="40" :src="avaUrl"></el-avatar>
+            <el-dropdown trigger="click">
+              <span class="username">Hello, Trader &nbsp;&nbsp;&nbsp;</span>
+              <el-link :underline="false" >
+                <el-avatar :size="40" :src="avaUrl"></el-avatar>
+              </el-link>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item @click.native="logout()">
                   LOG OUT
@@ -88,6 +90,8 @@
   .containerWrapper{
     display: flex;
     flex-direction: row;
+
+
   }
   .sidebarWrapper{
     min-height: 100vh;
@@ -98,11 +102,6 @@
   }
   .el-menu--collapse{
     height: 100%;
-  }
-  .indexPage .el-aside{
-    width: 300px;
-    overflow-x: hidden;
-    overflow-y: hidden;
   }
   .contentWrapper{
     flex: 1;
@@ -118,7 +117,7 @@
   }
   .mainContent{
     padding: 0 10px;
-    background: #F0F2F5;
+    background: #ffffff;
     height: 100%;
   }
   .userCenter{
