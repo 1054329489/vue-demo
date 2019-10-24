@@ -43,12 +43,12 @@ const router = new Router({
       path: '/sales',
       name: 'Sales',
       component: Sales
-    },
-    {
-      path: '/matchedLeg',
-      name: 'matchedLeg',
-      component: MatchedLeg
     }
+    // {
+    //   path: '/matchedLeg',
+    //   name: 'matchedLeg',
+    //   component: MatchedLeg
+    // }
   ]
 })
 

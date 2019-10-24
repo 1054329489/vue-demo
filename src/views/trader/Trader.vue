@@ -42,11 +42,15 @@
         label="status">
       </el-table-column>
       <el-table-column
-        label="option" width="180">
+        label="option" width="260">
         <template slot-scope="scope">
           <el-button
             size="mini"
             @click="handleHistory(scope.$index, scope.row)">History
+          </el-button>
+          <el-button
+            size="mini"
+            @click="handleEdit(scope.$index, scope.row)">Edit
           </el-button>
           <el-button
             size="mini"
@@ -173,7 +177,8 @@
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="auto" class="demo-ruleForm"
                style="width: 100%; margin:0 auto;">
         <el-form-item label="Cusip" prop="cusip">
-          <el-select v-model="ruleForm.cusip" placeholder="choose the cusip" value="" :clearable="true"
+          <el-select :disabled="disabledController" v-model="ruleForm.cusip" placeholder="choose the cusip" value=""
+                     :clearable="true"
                      style="width: 100%">
             <el-option
               v-for="item in cusip"
@@ -184,7 +189,8 @@
           </el-select>
         </el-form-item>
         <el-form-item label="Seller" prop="sId">
-          <el-select v-model="ruleForm.sId" placeholder="choose your name" value="" :clearable="true"
+          <el-select :disabled="disabledController" v-model="ruleForm.sId" placeholder="choose your name" value=""
+                     :clearable="true"
                      style="width: 100%">
             <el-option
               v-for="item in seller"
@@ -213,6 +219,7 @@
     data () {
       return {
         dialogVisible: false,
+        disabledController: false,
         matchDialogVisible: false,
         addDialogVisible: false,
         traderLeg: [],
@@ -229,9 +236,6 @@
           sId: '',
           price: '',
           notionalAmount: '',
-          status: 'REQUESTED',
-          interVNum: 1,
-          interId: 'TW1'
         },
         rules: {
           cusip: [
@@ -306,6 +310,12 @@
           _this.traderLegHistory = res.data
         })
       },
+      handleEdit (index, rowData) {
+        let _this = this
+        _this.addDialogVisible = true
+        _this.ruleForm = rowData
+        _this.disabledController = true
+      },
       handleForceMatch (index, rowData) {
         let _this = this
         _this.chosenSalesLeg = rowData
@@ -315,7 +325,7 @@
             alert('failed!')
           } else {
             alert('force match success!')
-            _this.matchDialogVisible=false
+            _this.matchDialogVisible = false
             _this.$http.get('/newest-trader-leg').then(res => {
               _this.traderLeg = []
               res.data.map(function (obj) {
@@ -331,12 +341,27 @@
       },
       addNew () {
         this.addDialogVisible = true
+        this.disabledController = false
+        this.ruleForm = {
+          cusip: '',
+          sId: '',
+          price: '',
+          notionalAmount: '',
+          status: 'REQUESTED',
+          interVNum: 1,
+          interId: 'TW1'
+        }
       },
       submitForm (formName) {
         let _this = this
         this.$refs[formName].validate((valid) => {
           if (valid) {
             console.log(JSON.stringify(_this.ruleForm))
+            if (_this.ruleForm.status !== 'REQUESTED') {
+              _this.ruleForm.status = 'PENDING'
+              _this.ruleForm.interVNum = _this.ruleForm.interVNum + 1
+              _this.ruleForm.interId = 'TW' + _this.ruleForm.interVNum
+            }
             _this.$http.post('/trader-leg', _this.ruleForm).then(res => {
               _this.addDialogVisible = false
               console.log(res)
