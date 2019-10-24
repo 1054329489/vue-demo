@@ -272,8 +272,7 @@
           if (valid) {
             console.log(JSON.stringify(_this.ruleForm))
             _this.ruleForm.status = 'PENDING'
-            _this.ruleForm.interVNum = _this.ruleForm.interVNum + 1
-            _this.ruleForm.interId = 'TW' + _this.ruleForm.interVNum
+            _this.ruleForm.interId = 'TW' + _this.ruleForm.interVNum + 1
             _this.$http.post('/matched-trader-leg', _this.ruleForm).then(res => {
               _this.editDialogVisible = false
               // console.log(res)
