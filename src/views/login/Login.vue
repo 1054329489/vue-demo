@@ -60,8 +60,8 @@ export default {
             _this.$message.success('Log In Successfully')
             _this.setToken({token: token})
 
-            let storage = window.localStorage
-            alert(storage.getItem('token'))
+            // let storage = window.localStorage
+            // alert(storage.getItem('token'))
 
             if (this.$store.state.token) {
               this.$router.push('/matchedLeg')

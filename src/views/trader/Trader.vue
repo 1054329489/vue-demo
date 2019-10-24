@@ -215,6 +215,7 @@
           <el-button @click="resetForm('ruleForm')">reset</el-button>
         </el-form-item>
       </el-form>
+
     </el-dialog>
   </div>
 </template>
@@ -326,9 +327,10 @@
         let param = '/force-match?traderLegTxnId=' + _this.chosenTraderLeg.txnId + '&salesLegTxnId=' + _this.chosenSalesLeg.txnId
         _this.$http.get(param).then(res => {
           if (res.data === false) {
-            alert('failed!')
+
+            _this.$message.err('failed!')
           } else {
-            alert('force match success!')
+            _this.$message.success('force match success!')
             _this.matchDialogVisible = false
             _this.$http.get('/newest-trader-leg').then(res => {
               _this.traderLeg = []
@@ -360,6 +362,7 @@
         let _this = this
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            // console.log(JSON.stringify(_this.ruleForm))
             console.log(JSON.stringify(_this.ruleForm))
             if (_this.ruleForm.status !== 'REQUESTED') {
               _this.ruleForm.status = 'PENDING'
@@ -403,5 +406,6 @@
   }
 </script>
 <style>
+
 
 </style>

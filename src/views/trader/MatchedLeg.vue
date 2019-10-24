@@ -13,7 +13,7 @@
               <span>{{ props.row.interVNum }}</span>
             </el-form-item>
             <el-form-item label="Seller">
-              <span>{{ props.row.sId }}</span>
+              <span>{{ props.row.realSellerId }}</span>
             </el-form-item>
             <el-form-item label="ClientId">
               <span>{{ props.row.cId }}</span>
@@ -231,6 +231,7 @@
               _this.salesLeg.map(function (salesLeg) {
                 if (salesLeg.txnId === obj.matchedSellerLeg) {
                   obj.cId = salesLeg.cId
+                  obj.realSellerId=salesLeg.sId
                 }
               })
               _this.traderLeg.push(obj)
@@ -276,7 +277,7 @@
             _this.$http.post('/matched-trader-leg', _this.ruleForm).then(res => {
               _this.editDialogVisible = false
               // console.log(res)
-              alert('submit success!')
+              _this.$message.success('edit success!')
               //refresh the data
               _this.$http.get('/newest-sales-leg').then(res1 => {
                 _this.salesLeg = res1.data
@@ -300,7 +301,7 @@
               })
             })
           } else {
-            console.log('error submit!!')
+            _this.$message.err('error submit!!')
             return false
           }
         })
