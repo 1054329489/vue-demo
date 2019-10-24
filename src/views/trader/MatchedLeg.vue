@@ -31,12 +31,12 @@
               <span>{{ props.row.notionalAmount }}</span>
             </el-form-item>
             <el-form-item label="option">
-<!--              <template slot-scope="scope">-->
-                <el-button
-                  size="mini"
-                  @click="handleHistory(props.row.matchedSellerLeg)">History
-                </el-button>
-<!--              </template>-->
+              <!--              <template slot-scope="scope">-->
+              <el-button
+                size="mini"
+                @click="handleHistory(props.row.matchedSellerLeg)">History
+              </el-button>
+              <!--              </template>-->
             </el-form-item>
           </el-form>
         </template>
@@ -70,11 +70,16 @@
         label="sellerId">
       </el-table-column>
       <el-table-column
-        label="option">
+        label="option" width="180">
         <template slot-scope="scope">
           <el-button
             size="mini"
             @click="handleTraderHistory(scope.$index, scope.row)">History
+          </el-button>
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleEdit(scope.$index, scope.row)">Edit
           </el-button>
         </template>
       </el-table-column>
@@ -125,6 +130,38 @@
     <el-button type="primary" @click="dialogVisible = false">ok</el-button>
   </span>
     </el-dialog>
+    <el-dialog
+      title="add new traderLeg"
+      :visible.sync="editDialogVisible"
+      width="50%"
+      center
+    >
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="auto" class="demo-ruleForm"
+               style="width: 100%; margin:0 auto;">
+        <el-form-item label="Cusip" prop="cusip">
+          <el-select disabled v-model="ruleForm.cusip" placeholder="choose the cusip" value=""
+                     :clearable="true"
+                     style="width: 100%">
+          </el-select>
+        </el-form-item>
+        <el-form-item label="SellerId" prop="sId">
+          <el-select disabled v-model="ruleForm.sId" placeholder="choose your name" value=""
+                     :clearable="true"
+                     style="width: 100%">
+          </el-select>
+        </el-form-item>
+        <el-form-item label="Price" prop="price">
+          <el-input v-model.number="ruleForm.price" placeholder="please input the price"></el-input>
+        </el-form-item>
+        <el-form-item label="Notional Amount" prop="notionalAmount">
+          <el-input v-model.number="ruleForm.notionalAmount" placeholder="please input the amount"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm('ruleForm')">submit</el-button>
+          <el-button type="primary" @click="editDialogVisible = false">cancel</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -151,10 +188,33 @@
       return {
         traderLeg: [],
         salesLeg: [],
+        ruleForm: {
+          cusip: '',
+          sId: '',
+          price: '',
+          notionalAmount: ''
+        },
         salesLegHistory: [],
         traderLegHistory: [],
         showClient: false,
-        dialogVisible: false
+        dialogVisible: false,
+        editDialogVisible: false,
+        rules: {
+          cusip: [
+            {required: true, message: 'please choose a product', trigger: 'change'}
+          ],
+          sId: [
+            {type: 'date', required: true, message: 'please choose your name', trigger: 'change'}
+          ],
+          notionalAmount: [
+            {required: true, message: 'please input the notional amount', trigger: 'blur'},
+            {type: 'number', message: 'not a number', trigger: 'blur'}
+          ],
+          price: [
+            {required: true, message: 'please input a price', trigger: 'blur'},
+            {type: 'number', message: 'not a number', trigger: 'blur'}
+          ]
+        }
       }
     },
     beforeCreate () {
@@ -166,7 +226,7 @@
           _this.traderLeg = []
           console.log(res.data)
           res.data.map(function (obj) {
-            if (obj.matchedSellerLeg !== null && obj.matchedSellerLeg!==undefined) {
+            if (obj.matchedSellerLeg !== null && obj.matchedSellerLeg !== undefined) {
               console.log(obj.matchedSellerLeg)
               _this.salesLeg.map(function (salesLeg) {
                 if (salesLeg.txnId === obj.matchedSellerLeg) {
@@ -177,7 +237,7 @@
             }
           })
         })
-        console.log(_this.traderLeg)
+        // console.log(_this.traderLeg)
       })
     },
     methods: {
@@ -199,6 +259,50 @@
         _this.$http.post('/sw-txn-history', rowData).then(res => {
           console.log(res)
           _this.salesLegHistory = res.data
+        })
+      },
+      handleEdit (index, rowData) {
+        let _this = this
+        _this.editDialogVisible = true
+        _this.ruleForm = rowData
+      },
+      submitForm (formName) {
+        let _this = this
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            console.log(JSON.stringify(_this.ruleForm))
+            _this.ruleForm.status = 'PENDING'
+            _this.ruleForm.interId = 'TW' + _this.ruleForm.interVNum + 1
+            _this.$http.post('/matched-trader-leg', _this.ruleForm).then(res => {
+              _this.editDialogVisible = false
+              // console.log(res)
+              alert('submit success!')
+              //refresh the data
+              _this.$http.get('/newest-sales-leg').then(res1 => {
+                _this.salesLeg = res1.data
+                console.log(res1.data)
+                _this.$http.get('/newest-trader-leg').then(res => {
+                  _this.traderLeg = []
+                  console.log(res.data)
+                  res.data.map(function (obj) {
+                    if (obj.matchedSellerLeg !== null && obj.matchedSellerLeg !== undefined) {
+                      console.log(obj.matchedSellerLeg)
+                      _this.salesLeg.map(function (salesLeg) {
+                        if (salesLeg.txnId === obj.matchedSellerLeg) {
+                          obj.cId = salesLeg.cId
+                        }
+                      })
+                      _this.traderLeg.push(obj)
+                    }
+                  })
+                })
+                // console.log(_this.traderLeg)
+              })
+            })
+          } else {
+            console.log('error submit!!')
+            return false
+          }
         })
       }
     }

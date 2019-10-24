@@ -50,6 +50,11 @@ const router = new Router({
       name: 'Sales',
       component: Sales
     }
+    // {
+    //   path: '/matchedLeg',
+    //   name: 'matchedLeg',
+    //   component: MatchedLeg
+    // }
   ]
 })
 
