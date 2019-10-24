@@ -6,6 +6,7 @@ import Sales from '@/components/InputForm'
 import PendingLeg from '@/views/trader/Trader'
 import MatchedLeg from '@/views/trader/MatchedLeg'
 import NavMenu from "@/components/NavMenu";
+import AddDialog from "@/components/AddDialog"
 
 Vue.use(Router)
 
@@ -25,12 +26,17 @@ const router = new Router({
         {
           path: '/pendingLeg',
           name: 'PendingLeg',
-          component: PendingLeg
+          component: PendingLeg,
         },
         {
           path: '/matchedLeg',
           name: 'matchedLeg',
           component: MatchedLeg
+        },
+        {
+          path: '/add',
+          name: 'add',
+          component: AddDialog
         }
       ]
     },
@@ -43,11 +49,6 @@ const router = new Router({
       path: '/sales',
       name: 'Sales',
       component: Sales
-    },
-    {
-      path: '/matchedLeg',
-      name: 'matchedLeg',
-      component: MatchedLeg
     }
   ]
 })

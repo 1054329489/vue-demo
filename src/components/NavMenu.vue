@@ -8,20 +8,26 @@
             <span slot="title">Trader WorkStation</span>
           </el-menu-item>
           <el-submenu index="1">
+          <template slot="title">
+            <i class="el-icon-price-tag"></i>
+            <span slot="title">Trader Leg</span>
+          </template>
+          <el-menu-item-group title="Leg Detail">
+            <!--              change into matched and pending-->
+            <el-menu-item index="/matchedLeg" @click="goTo('/matchedLeg')">Matched Lag</el-menu-item>
+            <el-menu-item index="/pendingLeg"  @click="goTo('/pendingLeg')">Pending Leg</el-menu-item>
+          </el-menu-item-group>
+        </el-submenu>
+          <el-menu-item index="/add" @click="goTo('/add')">
             <template slot="title">
-              <i class="el-icon-price-tag"></i>
-              <span slot="title">Trader Leg</span>
+              <i class="el-icon-plus"></i>
+              <span slot="title">Add New Leg</span>
             </template>
-            <el-menu-item-group title="Leg Detail">
-<!--              change into matched and pending-->
-              <el-menu-item index="/matchedLeg" @click="goTo('/matchedLeg')">Matched Lag</el-menu-item>
-              <el-menu-item index="/pendingLeg"  @click="goTo('/pendingLeg')">Pending Leg</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
+          </el-menu-item>
         </el-menu>
       </div>
-      <div class="contentWrapper" style="background-color: #EFF2F7" >
-        <div class="mainHeader" >
+      <div class="contentWrapper"  >
+        <div class="mainHeader"  style="background-color: #EFF2F7">
           <!--nav collapse control-->
           <span><i class="el-icon-s-fold" @click="handleFold()"></i></span>
           <div class="citiLogo">

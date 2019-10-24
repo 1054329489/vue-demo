@@ -2,7 +2,7 @@
   <div class="page-module login-container">
     <div class="login-panel" @keyup.enter="onSubmit">
       <div style="text-align: center">
-        <img src="../../../src/assets/tps-logo.png" width="101" height="127">
+        <img src="../../../src/assets/tps-logo.png">
       </div>
       <div class="head-text align_center">
         <p>SIMPLE TPS</p>

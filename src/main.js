@@ -9,7 +9,8 @@ import router from './router'
 import axios from 'axios'
 import store from './store/index'
 
-axios.defaults.baseURL = 'http://localhost:8080/tps'
+// axios.defaults.baseURL = 'http://localhost:8080/tps'
+axios.defaults.baseURL = 'https://simple-tps.caoyu.online/tps'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 Vue.prototype.$http = axios
 Vue.prototype.$ajax = axios

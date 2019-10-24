@@ -205,6 +205,7 @@
           <el-button @click="resetForm('ruleForm')">reset</el-button>
         </el-form-item>
       </el-form>
+
     </el-dialog>
   </div>
 </template>
@@ -336,26 +337,33 @@
         let _this = this
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            console.log(JSON.stringify(_this.ruleForm))
+            // console.log(JSON.stringify(_this.ruleForm))
             _this.$http.post('/trader-leg', _this.ruleForm).then(res => {
-              _this.addDialogVisible = false
+              _this.addDialogVisibletrader = false
               console.log(res)
-              alert('submit success!')
-              this.$http.get('/trader-leg').then(res => {
-                _this.allTraderLeg = res.data
-                _this.$http.get('/newest-trader-leg').then(res => {
-                  _this.traderLeg = []
-                  res.data.map(function (obj) {
-                    if (obj.status === 'PENDING') {
-                      _this.traderLeg.push(obj)
-                    }
+              _this.$message.success('submit success!')
+              if(res.data===1){
+                this.$http.get('/trader-leg').then(res => {
+                  _this.allTraderLeg = res.data
+                  _this.$http.get('/newest-trader-leg').then(res => {
+                    _this.traderLeg = []
+                    res.data.map(function (obj) {
+                      if (obj.status === 'PENDING') {
+                        _this.traderLeg.push(obj)
+                      }
+                    })
                   })
+                  this.addDialogVisible = false
                 })
-              })
+              }else {
+                _this.$router.replace('/matchedLeg')
+                this.$refs[formName].resetFields()
+              }
+
             })
 
           } else {
-            console.log('error submit!!')
+            _this.$message.error('error submit!!')
             return false
           }
         })
@@ -367,14 +375,5 @@
   }
 </script>
 <style>
-  .container {
-    min-height: 100vh;
-    align-items: center;
-    background-image: url(../login/images/login_body.jpg);
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    display: flex;
-    justify-content: center;
 
-  }
 </style>
