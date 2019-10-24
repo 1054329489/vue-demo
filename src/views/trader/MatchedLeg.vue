@@ -36,10 +36,6 @@
                 size="mini"
                 @click="handleHistory(props.row.matchedSellerLeg)">History
               </el-button>
-              <el-button
-                size="mini"
-                @click="handleEdit(props.row.matchedSellerLeg)">Edit
-              </el-button>
               <!--              </template>-->
             </el-form-item>
           </el-form>
@@ -146,24 +142,12 @@
           <el-select disabled v-model="ruleForm.cusip" placeholder="choose the cusip" value=""
                      :clearable="true"
                      style="width: 100%">
-            <el-option
-              v-for="item in cusip"
-              :key="item"
-              :label="item"
-              :value="item">
-            </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="Seller" prop="sId">
+        <el-form-item label="SellerId" prop="sId">
           <el-select disabled v-model="ruleForm.sId" placeholder="choose your name" value=""
                      :clearable="true"
                      style="width: 100%">
-            <el-option
-              v-for="item in seller"
-              :key="item.sId"
-              :label="item.sName"
-              :value="item.sId">
-            </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="Price" prop="price">
@@ -204,7 +188,12 @@
       return {
         traderLeg: [],
         salesLeg: [],
-        ruleForm: {},
+        ruleForm: {
+          cusip: '',
+          sId: '',
+          price: '',
+          notionalAmount: ''
+        },
         salesLegHistory: [],
         traderLegHistory: [],
         showClient: false,

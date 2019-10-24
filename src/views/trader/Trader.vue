@@ -127,8 +127,12 @@
           label="TXN ID"
         ></el-table-column>
         <el-table-column
-          prop="interVNum"
-          label="version"
+          prop="txnId"
+          label="TXN ID"
+        ></el-table-column>
+        <el-table-column
+          prop="sId"
+          label="sId"
         >
         </el-table-column>
         <el-table-column
@@ -235,7 +239,7 @@
           cusip: '',
           sId: '',
           price: '',
-          notionalAmount: '',
+          notionalAmount: ''
         },
         rules: {
           cusip: [
